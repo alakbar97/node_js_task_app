@@ -1,0 +1,23 @@
+{
+  "name": "node_js_task_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alakbar97/node_js_task_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alakbar97/node_js_task_app/issues"
+  },
+  "homepage": "https://github.com/alakbar97/node_js_task_app#readme",
+  "dependencies": {
+    "mongodb": "^3.5.9"
+  }
+}
