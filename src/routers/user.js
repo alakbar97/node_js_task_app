@@ -1,6 +1,7 @@
 const express = require('express');
 const route = new express.Router();
 const User = require('../models/user');
+const auth = require('../middleware/auth');
 
 route.post('/users', async (req, res) => {
     const user = new User(req.body);
@@ -30,42 +31,40 @@ route.post('/users/login', async (req, res) => {
     }
 });
 
-route.get('/users', async (req, res) => {
+route.post('/users/logout', auth, async (req, res) => {
     try {
-        const users = await User.find({});
-        res.send(users);
+        req.user.tokens = req.user.tokens.filter(item => item.token !== req.token);
+        await req.user.save();
+        res.send();
+    } catch (error) {
+        res.status(500).send(e);
+    }
+});
+
+route.post('/users/logoutAll', auth, async (req, res) => {
+    try {
+        req.user.tokens = [];
+        await req.user.save();
+        res.send();
+    } catch (error) {
+        res.status(500).send(e);
+    }
+});
+
+route.get('/users/me', auth, async (req, res) => {
+    res.send(req.user);
+});
+
+route.delete('/users/me', auth, async (req, res) => {
+    try {
+        await req.user.remove();
+        res.send(req.user);
     } catch (error) {
         res.status(500).send(error);
     }
 });
 
-route.delete('/users/:id', async (req, res) => {
-    try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        if (!user)
-            return res.status(404).send({
-                error: 'Not Found !'
-            });
-
-        res.send(user);
-    } catch (error) {
-        res.send(500).send(error);
-    }
-});
-
-route.get('/users/:id', async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        if (!user)
-            return res.status(404).send('User Not Found');
-
-        res.send(user);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-});
-
-route.patch('/users/:id', async (req, res) => {
+route.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdate = ['name', 'age', 'email', 'password'];
     const isValidRequest = updates.every(update => allowedUpdate.includes(update));
@@ -75,21 +74,11 @@ route.patch('/users/:id', async (req, res) => {
         });
 
     try {
+        
+        updates.forEach(item => req.user[item] = req.body[item]);
+        await req.user.save();
 
-        const user = await User.findById(req.params.id);
-
-        // const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-        //     new: true,
-        //     runValidators: true
-        // });
-
-        if (!user)
-            return res.send(404).send();
-
-        updates.forEach(item => user[item] = req.body[item]);
-        await user.save();
-
-        res.send(user);
+        res.send(req.user);
     } catch (error) {
         res.status(500).send(error);
     }
