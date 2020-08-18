@@ -7,6 +7,9 @@ const app = express();
 
 const port = process.env.PORT;
 
+app.get('/', (req, res) => {
+    res.send('Welcome to Task APP written in Node.js');
+});
 
 app.use(express.json());
 app.use(userRoute);
