@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/alakbar97/node_js_task_app#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.2.3",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
@@ -28,5 +29,8 @@
     "nodemon": "^2.0.4",
     "sharp": "^0.25.4",
     "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
   }
 }
