@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 require('./db/mongoose');
 const userRoute = require('./routers/user');
 const taskRoute = require('./routers/task');
@@ -8,7 +9,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.get('/', (req, res) => {
-    res.send('Welcome to Task APP written in Node.js');
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 app.use(express.json());

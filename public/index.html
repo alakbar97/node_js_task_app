@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task App</title>
+    <style>
+        body {
+            font-size: 20px;
+        }
+
+        b {
+            font-size: 25px;
+
+        }
+
+        header h1,
+        footer p {
+            text-align: center;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        main>ul {
+            list-style-type: none;
+        }
+
+        main>ul,
+        main>p:last-of-type {
+            width: 250px;
+        }
+
+        ul>li {
+            padding: 8px
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Task App - Rest Api</h1>
+    </header>
+    <main>
+        <p>
+            You have to provide token in header for Authorized routes with Bearer keyword. Example : Bearer sometokenhere
+        </p>
+        <p>
+            Here is the list of all routes:
+        </p>
+        <ul>
+            <li><b>Unauthorized</b>:</li>
+            <li>/users - POST</li>
+            <li>/users/login - POST</li>
+            <li>/users/:id/avatar - GET</li>
+        </ul>
+        <ul>
+            <li><b>Authorized</b>:</li>
+            <li>/users/logout - POST</li>
+            <li>/users/logoutAll - POST</li>
+            <li>/users/me - GET , DELETE , PATCH</li>
+            <li>/users/me/avatar - POST , DELETE</li>
+            <li>/tasks - GET , POST</li>
+            <li>/tasks/:id - GET , PATCH , DELETE</li>
+        </ul>
+    </main>
+</body>
+
+</html>

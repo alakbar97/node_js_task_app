@@ -71,10 +71,6 @@ route.patch('/tasks/:id', auth, async (req, res) => {
 
 
     try {
-        // const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
-        //     new: true,
-        //     runValidators: true
-        // });
         const task = await Task.findOne({
             _id: req.params.id,
             owner: req.user._id
